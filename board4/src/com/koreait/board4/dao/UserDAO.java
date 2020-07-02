@@ -35,6 +35,33 @@ public class UserDAO {
 		return result;
 	}
 	
+	public static int chkId(String cid) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;		
+		
+		String sql = " SELECT count(cid) FROM t_user3 WHERE cid = ? ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setNString(1, cid);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps, rs);
+		}
+		
+		return result;
+	}
+	
 	//1:로그인성공, 2:아이디없음, 3:비밀번호 틀림, 0:에러발생
 	public static int login(UserVO param) {
 		int result = 0;

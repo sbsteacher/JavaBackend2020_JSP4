@@ -11,7 +11,7 @@
 	<div>
 		<div>${msg}</div>
 		<form id="frm" action="/join" method="post" onsubmit="return chk()">
-			<input type="hidden1" id="checkId" value="0">
+			<input type="hidden1" id="checkId" value="2">
 			<div>
 				<input type="text" name="cid" placeholder="아이디" value="${data.cid}">
 				<button onclick="return chkId()">아이디 중복확인</button>
