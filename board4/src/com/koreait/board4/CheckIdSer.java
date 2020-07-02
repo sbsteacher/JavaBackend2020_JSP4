@@ -20,11 +20,11 @@ public class CheckIdSer extends HttpServlet {
 		System.out.println("cid : " + cid);
 		
 		int result = UserDAO.chkId(cid);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
 		
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		out.print(String.format("{isExist: %d}", result));
+		out.print(String.format("{\"isExist\": %d}", result));
 		out.flush();
 		
 	}
