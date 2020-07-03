@@ -7,7 +7,14 @@ public class BoardVO {//t_board3
 	private String r_dt;
 	private String m_dt;
 	private int i_user;
+	private int cnt;
 	
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getI_board() {
 		return i_board;
 	}

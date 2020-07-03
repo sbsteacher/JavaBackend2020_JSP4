@@ -25,6 +25,9 @@
 		${msg }
 	</div>
 	<div>
+		조회수: ${data.cnt }
+	</div>
+	<div>
 		${data.title }, ${data.ctnt }, ${data.r_dt }, ${data.userNm }
 	</div>
 	<script>
