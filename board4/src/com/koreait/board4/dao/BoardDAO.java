@@ -44,50 +44,7 @@ public class BoardDAO {
 		return i_board;
 	}
 	
-	public static List<BoardListModel> selectBoardList() {
-		List<BoardListModel> list = new ArrayList();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		String sql = " SELECT " + 
-				"    A.i_board, A.title, A.r_dt " + 
-				"    , B.i_user, B.nm as userNm " + 
-				" FROM t_board3 A " + 
-				" INNER JOIN t_user3 B " + 
-				" ON A.i_user = B.i_user " + 
-				" ORDER BY i_board DESC ";
-		
-		try {
-			con = DbCon.getCon();
-			ps = con.prepareStatement(sql);			
-			rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				int i_board = rs.getInt("i_board");
-				String title = rs.getNString("title");
-				String r_dt = rs.getNString("r_dt");
-				int i_user = rs.getInt("i_user");
-				String userNm = rs.getNString("userNm");
-				
-				BoardListModel bm = new BoardListModel();
-				bm.setI_board(i_board);
-				bm.setTitle(title);
-				bm.setR_dt(r_dt);
-				bm.setI_user(i_user);
-				bm.setUserNm(userNm);
-				
-				list.add(bm);
-			}
-			
-		} catch (Exception e) {			
-			e.printStackTrace();
-		} finally {
-			DbCon.close(con, ps, rs);
-		}
-		
-		return list;
-	}
+
 	
 	public static BoardListModel selectBoard(int i_board) {
 		BoardListModel result = null;
@@ -106,7 +63,7 @@ public class BoardDAO {
 		try {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, i_board);
+			ps.setInt(1, i_board);			
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
@@ -133,6 +90,46 @@ public class BoardDAO {
 		}
 		
 		return result;
+	}
+	
+	public static List<BoardListModel> selectBoardList() {
+		List<BoardListModel> list = new ArrayList();
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT A.i_board, A.title, A.r_dt " + 
+				"    , B.i_user, B.nm as userNm " + 
+				" FROM t_board3 A " + 
+				" INNER JOIN t_user3 B " + 
+				" ON A.i_user = B.i_user " + 
+				" ORDER BY i_board DESC ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				BoardListModel model = new BoardListModel();
+				
+				model.setI_board(rs.getInt("i_board"));
+				model.setTitle(rs.getNString("title"));
+				model.setR_dt(rs.getNString("r_dt"));
+				model.setI_user(rs.getInt("i_user"));
+				model.setUserNm(rs.getNString("userNm"));
+				
+				list.add(model);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps, rs);
+		}
+		return list;
 	}
 	
 	public static int modBoard(BoardVO param) {
