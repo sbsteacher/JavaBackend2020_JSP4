@@ -18,9 +18,14 @@
 </style>
 </head>
 <body>	
-	<div>${loginUser.nm }님 환영합니다.</div>
 	<div>
-		<a href="boardReg"><button>글쓰기</button></a>
+		${loginUser.nm }님 환영합니다.
+		<form action="/boardList" method="post">
+			<input type="submit" value="로그아웃">			
+		</form>
+	</div>
+	<div>
+		<a href="/boardReg"><button>글쓰기</button></a>
 	</div>
 	<div>
 		<table>

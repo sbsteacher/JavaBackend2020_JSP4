@@ -17,6 +17,11 @@ public class LoginSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getSession().getAttribute("loginUser") != null) {
+			response.sendRedirect("/boardList");
+			return;
+		}
+		
 		String jsp = "/WEB-INF/jsp/login.jsp";
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}

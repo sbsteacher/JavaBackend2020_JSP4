@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.koreait.board4.dao.UserDAO;
 import com.koreait.board4.vo.UserVO;
@@ -14,7 +15,12 @@ import com.koreait.board4.vo.UserVO;
 public class JoinSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		if(request.getSession().getAttribute("loginUser") != null) {
+			response.sendRedirect("/boardList");
+			return;
+		}
+		
 		String jsp = "/WEB-INF/jsp/join.jsp";
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}

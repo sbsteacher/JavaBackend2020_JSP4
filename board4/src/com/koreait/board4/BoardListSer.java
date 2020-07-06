@@ -26,14 +26,17 @@ public class BoardListSer extends HttpServlet {
 		
 		String jsp = "/WEB-INF/jsp/boardList.jsp";
 		request.getRequestDispatcher(jsp).forward(request, response);
+	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		System.out.println("ddd");
+		HttpSession hs = request.getSession();
+		hs.invalidate();
+		response.sendRedirect("/login");
 	}
 
 }

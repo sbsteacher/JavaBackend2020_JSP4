@@ -37,7 +37,6 @@ public class BoardDetailSer extends HttpServlet {
 				msg = "수정 실패";
 				break;
 			}
-			
 			request.setAttribute("msg",  msg);
 		}
 		

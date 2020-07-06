@@ -48,8 +48,8 @@ public class BoardDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = " SELECT " + "    A.i_board, A.title, A.r_dt, A.ctnt, A.cnt " + "    , B.i_user, B.nm as userNm "
-				+ " FROM t_board3 A " + " INNER JOIN t_user3 B " + " ON A.i_user = B.i_user " + " WHERE A.i_board = ? ";
+		String sql = " SELECT   A.i_board, A.title, A.r_dt, A.ctnt, A.cnt, B.i_user, B.nm as userNm "
+				+ " FROM t_board3 A INNER JOIN t_user3 B  ON A.i_user = B.i_user WHERE A.i_board = ? ";
 
 		try {
 			con = DbCon.getCon();
@@ -85,20 +85,24 @@ public class BoardDAO {
 		return result;
 	}
 
-	public static List<BoardListModel> selectBoardList() {
+	public static List<BoardListModel> selectBoardList(BoardListModel param) {
 		List<BoardListModel> list = new ArrayList();
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = " SELECT A.i_board, A.title, A.r_dt, A.cnt " + "    , B.i_user, B.nm as userNm "
-				+ " FROM t_board3 A " + " INNER JOIN t_user3 B " + " ON A.i_user = B.i_user "
+		String sql = " SELECT A.i_board, A.title, A.r_dt, A.cnt, B.i_user, B.nm as userNm"
+				+ "  , NVL(C.i_user, 0) as likeUser " //추가
+				+ " FROM t_board3 A INNER JOIN t_user3 B  ON A.i_user = B.i_user "
+				+ " LEFT JOIN t_board3_like C ON A.i_board = C.i_board AND C.i_user = ? " //추가
 				+ " ORDER BY i_board DESC ";
 
 		try {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_user()); //추가
+			
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -110,6 +114,7 @@ public class BoardDAO {
 				model.setI_user(rs.getInt("i_user"));
 				model.setUserNm(rs.getNString("userNm"));
 				model.setCnt(rs.getInt("cnt"));
+				model.setLikeUser(rs.getInt("likeUser")); //추가
 
 				list.add(model);
 			}
