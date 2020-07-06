@@ -35,6 +35,7 @@
 				<th>등록일시</th>
 				<th>작성자</th>
 				<th>조회수</th>
+				<th>Like</th>
 			</tr>
 			<c:forEach items="${data }" var="item">
 				<tr class="boardItem" onclick="moveToDetail(${item.i_board})">
@@ -43,6 +44,10 @@
 					<td>${item.r_dt }</td>
 					<td>${item.userNm }</td>
 					<td>${item.cnt }</td>
+					<td>
+						<c:if test="${item.likeUser > 0 }">♥</c:if>
+						<c:if test="${item.likeUser == 0 }">♡</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
