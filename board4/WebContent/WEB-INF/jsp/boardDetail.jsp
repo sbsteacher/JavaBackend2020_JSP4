@@ -17,10 +17,10 @@
 		</c:if>
 	</div>
 	<div>
-		<button onclick="doLike(${data.i_board, item.likeUser})">
+		<button onclick="doLike(${data.i_board}, ${data.likeUser})">
 			<span id="markLike">
-				<c:if test="${item.likeUser > 0 }">♥</c:if>
-				<c:if test="${item.likeUser == 0 }">♡</c:if>
+				<c:if test="${data.likeUser > 0 }">♥</c:if>
+				<c:if test="${data.likeUser == 0 }">♡</c:if>
 			</span>
 		</button>
 	</div>

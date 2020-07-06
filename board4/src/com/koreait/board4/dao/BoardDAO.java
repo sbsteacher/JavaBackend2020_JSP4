@@ -42,19 +42,23 @@ public class BoardDAO {
 		return i_board;
 	}
 
-	public static BoardListModel selectBoard(int i_board) {
+	public static BoardListModel selectBoard(BoardListModel param) {
 		BoardListModel result = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		String sql = " SELECT   A.i_board, A.title, A.r_dt, A.ctnt, A.cnt, B.i_user, B.nm as userNm "
-				+ " FROM t_board3 A INNER JOIN t_user3 B  ON A.i_user = B.i_user WHERE A.i_board = ? ";
+				+ " , nvl(C.i_user, 0) as likeUser "
+				+ " FROM t_board3 A INNER JOIN t_user3 B  ON A.i_user = B.i_user "
+				+ " LEFT JOIN t_board3_like C ON A.i_board = C.i_board AND C.i_user = ? "
+				+ " WHERE A.i_board = ? ";
 
 		try {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, i_board);
+			ps.setInt(1, param.getI_user());
+			ps.setInt(2, param.getI_board());			
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -66,14 +70,16 @@ public class BoardDAO {
 				int i_user = rs.getInt("i_user");
 				String userNm = rs.getNString("userNm");
 				int cnt = rs.getInt("cnt");
+				int likeUser = rs.getInt("likeUser");
 
-				result.setI_board(i_board);
+				result.setI_board(param.getI_board());
 				result.setTitle(title);
 				result.setCtnt(ctnt);
 				result.setR_dt(r_dt);
 				result.setI_user(i_user);
 				result.setUserNm(userNm);
 				result.setCnt(cnt);
+				result.setLikeUser(likeUser);
 			}
 
 		} catch (Exception e) {
