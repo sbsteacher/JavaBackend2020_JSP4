@@ -17,7 +17,7 @@
 		</c:if>
 	</div>
 	<div>
-		<button onclick="doLike(${data.i_board}, ${data.likeUser})">
+		<button onclick="doLike(${data.i_board})">
 			<span id="markLike">
 				<c:if test="${data.likeUser > 0 }">♥</c:if>
 				<c:if test="${data.likeUser == 0 }">♡</c:if>
@@ -33,18 +33,35 @@
 	<div>
 		${data.title }, ${data.ctnt }, ${data.r_dt }, ${data.userNm }
 	</div>
-	<script>
+	<script>		
 		function doLike(i_board) {
+			
+			var isLike = (markLike.innerHTML.trim() == '♥') ?  1 : 0
+			
 			axios.get('/boardLike', {
 				params: {
-					i_board:i_board
+					'i_board': i_board,
+					'isLike': isLike
 				}
 			}).then(function(res) {
+				if(res.data.result == 1) { //잘 처리 됨!!!
+					/*
+					if(markLike.innerHTML == '♥') {
+						markLike.innerHTML = '♡' 
+					} else {
+						markLike.innerHTML = '♥'
+					}
+					*/
+					markLike.innerHTML = (markLike.innerHTML.trim() == '♥') ?  '♡' : '♥'
+				}
+				
+				/*
 				if(res.data.result == 1) {
 					markLike.innerHTML = '♥'
 				} else {
 					markLike.innerHTML = '♡'
 				}
+				*/
 				//console.log(JSON.stringify(res))
 			})
 		}

@@ -16,7 +16,18 @@ import com.koreait.board4.vo.UserVO;
 public class LoginSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private void autoLogin(HttpServletRequest request) {
+		HttpSession hs = request.getSession();
+		UserVO loginUser = new UserVO();
+		loginUser.setI_user(2);
+		loginUser.setCid("microform");
+		loginUser.setNm("박도흠");
+		hs.setAttribute("loginUser", loginUser);
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		autoLogin(request);		
+		
 		if(request.getSession().getAttribute("loginUser") != null) {
 			response.sendRedirect("/boardList");
 			return;
