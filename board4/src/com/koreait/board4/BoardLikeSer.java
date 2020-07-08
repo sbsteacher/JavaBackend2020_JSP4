@@ -37,12 +37,12 @@ public class BoardLikeSer extends HttpServlet {
 		} else { //disable 해줘야함 (좋아요 취소)
 			result = BoardLikeDAO.disableLike(param);
 		}
+		response.setCharacterEncoding("UTF-8");
 		
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");		
 		String res = String.format("{\"result\": %d}", result);
-		out.print(res);
+		out.print(res); 
 		out.flush();
 	}	
 

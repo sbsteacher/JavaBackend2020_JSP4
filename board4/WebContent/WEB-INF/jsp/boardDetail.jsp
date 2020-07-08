@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String name = "ddd";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +38,7 @@
 	</div>
 	<script>		
 		function doLike(i_board) {
-			
+	
 			var isLike = (markLike.innerHTML.trim() == '♥') ?  1 : 0
 			
 			axios.get('/boardLike', {
@@ -44,25 +47,9 @@
 					'isLike': isLike
 				}
 			}).then(function(res) {
-				if(res.data.result == 1) { //잘 처리 됨!!!
-					/*
-					if(markLike.innerHTML == '♥') {
-						markLike.innerHTML = '♡' 
-					} else {
-						markLike.innerHTML = '♥'
-					}
-					*/
+				if(res.data.result == 1) { //잘 처리 됨!!!					
 					markLike.innerHTML = (markLike.innerHTML.trim() == '♥') ?  '♡' : '♥'
-				}
-				
-				/*
-				if(res.data.result == 1) {
-					markLike.innerHTML = '♥'
-				} else {
-					markLike.innerHTML = '♡'
-				}
-				*/
-				//console.log(JSON.stringify(res))
+				}				
 			})
 		}
 	</script>

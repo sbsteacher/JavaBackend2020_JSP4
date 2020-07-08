@@ -3,6 +3,7 @@ package com.koreait.board4.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,19 +182,38 @@ public class BoardDAO {
 	public static int delBoard(BoardVO param) {
 		int result = 0;
 		Connection con = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps = null;		
 
-		String sql = " DELETE FROM t_board3 WHERE i_board = ? AND i_user = ? ";
+		String sql = " DELETE FROM t_board3_like WEHRE i_board = ? ";
+		String sql2 = " DELETE FROM t_board3 WHERE i_board = ? AND i_user = ? ";
 
 		try {
 			con = DbCon.getCon();
+			con.setAutoCommit(false);
+			
+			//sql
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			result = ps.executeUpdate();
+			ps.close();
+			System.out.println("좋아요테이블 삭제 레코드 수 : " + result);
+			
+			//sql2
+			ps = con.prepareStatement(sql2);
 			ps.setInt(1, param.getI_board());
 			ps.setInt(2, param.getI_user());
 			result = ps.executeUpdate();
 
+			con.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+			if(con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {				
+					e1.printStackTrace();
+				}
+			}
 		} finally {
 			DbCon.close(con, ps);
 		}

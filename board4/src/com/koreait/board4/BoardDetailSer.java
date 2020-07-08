@@ -25,7 +25,7 @@ public class BoardDetailSer extends HttpServlet {
 			response.sendRedirect("/login");
 			return;
 		}
-		String typ = request.getParameter("typ");
+		String typ = request.getParameter("typ"); //디테일 페이지 or 수정 페이지 로 이동할건지
 		
 		String err = request.getParameter("err");
 		if(err != null) {
@@ -40,7 +40,7 @@ public class BoardDetailSer extends HttpServlet {
 			}
 			request.setAttribute("msg",  msg);
 		}
-		
+				
 		int i_board = Integer.parseInt(request.getParameter("i_board"));
 		
 		ServletContext  application = getServletContext();
