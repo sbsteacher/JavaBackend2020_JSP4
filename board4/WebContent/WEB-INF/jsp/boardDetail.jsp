@@ -36,6 +36,19 @@
 	<div>
 		${data.title }, ${data.ctnt }, ${data.r_dt }, ${data.userNm }
 	</div>
+	
+	<div>
+		<form action="/boardCmt" method="post">
+			<input type="hidden" name="i_board" value="${data.i_board}">
+			<div>
+				<textarea name="cmt"></textarea>
+			</div>
+			<div>
+				<input type="submit" value="댓글달기">
+			</div>
+		</form>
+	</div>
+	
 	<script>		
 		function doLike(i_board) {
 	

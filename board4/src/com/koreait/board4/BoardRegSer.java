@@ -35,6 +35,9 @@ public class BoardRegSer extends HttpServlet {
 		HttpSession hs = request.getSession();
 		UserVO loginUser = (UserVO)hs.getAttribute("loginUser");
 		
+		//아이디, 비밀번호 사용하려고
+		//EL식 사용하려고
+		
 		BoardVO param = new BoardVO();
 		param.setTitle(title);
 		param.setCtnt(ctnt);

@@ -158,8 +158,12 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String sql = " UPDATE t_board3 " + " SET title = ? " + " , ctnt = ? " + " WHERE i_board = ? "
-				+ " AND i_user = ? ";
+		String sql = " UPDATE t_board3 " 
+						+ " SET title = ? " 
+						+ " , ctnt = ? "
+						+ " , m_dt = sysdate "
+						+ " WHERE i_board = ? "
+						+ " AND i_user = ? ";
 
 		try {
 			con = DbCon.getCon();
@@ -184,7 +188,7 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;		
 
-		String sql = " DELETE FROM t_board3_like WEHRE i_board = ? ";
+		String sql = " DELETE FROM t_board3_like WHERE i_board = ? ";
 		String sql2 = " DELETE FROM t_board3 WHERE i_board = ? AND i_user = ? ";
 
 		try {
@@ -192,19 +196,24 @@ public class BoardDAO {
 			con.setAutoCommit(false);
 			
 			//sql
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);  //A
 			ps.setInt(1, param.getI_board());
 			result = ps.executeUpdate();
 			ps.close();
 			System.out.println("좋아요테이블 삭제 레코드 수 : " + result);
 			
 			//sql2
-			ps = con.prepareStatement(sql2);
+			ps = con.prepareStatement(sql2); //B
 			ps.setInt(1, param.getI_board());
 			ps.setInt(2, param.getI_user());
 			result = ps.executeUpdate();
-
-			con.commit();
+			
+			if(result == 0) {
+				con.rollback();
+			} else {
+				con.commit();	
+			}			
+			con.setAutoCommit(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			if(con != null) {
@@ -214,7 +223,7 @@ public class BoardDAO {
 					e1.printStackTrace();
 				}
 			}
-		} finally {
+		} finally {			
 			DbCon.close(con, ps);
 		}
 
