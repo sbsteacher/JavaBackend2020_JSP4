@@ -35,7 +35,7 @@ public class BoardCmtSer extends HttpServlet {
 	}
 
 
-	//등록
+	//등록&수정
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
 		UserVO loginUser = (UserVO)hs.getAttribute("loginUser");

@@ -127,8 +127,11 @@
 			cmtModContainer.style.visibility = 'hidden'
 		}
 	
-		function showCmtModWin(i_cmt, cmt) {
-			cmtModContainer.style.visibility = 'visible'
+		
+		function showCmtModWin(i_cmt, cmt) {			
+			cmtModContainer.style.visibility = 'visible'			
+			cmtFrm.i_cmt.value = i_cmt
+			cmtFrm.cmt.value = cmt;
 		}
 	
 		function doLike(i_board) {
