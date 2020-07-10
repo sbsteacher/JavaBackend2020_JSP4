@@ -17,11 +17,25 @@ import com.koreait.board4.vo.UserVO;
 public class BoardCmtSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	//삭제
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession hs = request.getSession();
+		UserVO loginUser = (UserVO)hs.getAttribute("loginUser");
 		
+		int i_board = Integer.parseInt(request.getParameter("i_board"));
+		int i_cmt = Integer.parseInt(request.getParameter("i_cmt"));
+		
+		BoardCmtVO param = new BoardCmtVO();
+		param.setI_cmt(i_cmt);
+		param.setI_user(loginUser.getI_user());
+		
+		BoardCmtDAO.deleteCmt(param);
+		
+		response.sendRedirect("/boardDetail?i_board=" + i_board);		
 	}
 
 
+	//등록
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
 		UserVO loginUser = (UserVO)hs.getAttribute("loginUser");

@@ -67,7 +67,7 @@
 					<td>${item.r_dt }</td>
 					<td>
 						<c:if test="${item.i_user == loginUser.i_user}">
-							<a href="/boardCmt?i_cmt=${item.i_cmt }">삭제</a>
+							<a href="/boardCmt?i_board=${data.i_board}&i_cmt=${item.i_cmt}">삭제</a>
 						</c:if>
 					</td>
 				</tr>				

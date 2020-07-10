@@ -33,10 +33,10 @@ public class BoardDetailSer extends HttpServlet {
 			String msg = "";
 			switch(err) {
 			case "1":
-				msg = "삭제 실패";
+				msg = "글 삭제 실패";
 				break;
 			case "2":
-				msg = "수정 실패";
+				msg = "글 수정 실패";
 				break;
 			}
 			request.setAttribute("msg",  msg);

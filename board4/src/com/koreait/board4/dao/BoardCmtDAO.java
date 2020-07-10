@@ -80,7 +80,26 @@ public class BoardCmtDAO {
 		return list;
 	}
 	
-	
+	public static void deleteCmt(BoardCmtVO param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = " DELETE FROM t_board3_cmt WHERE i_cmt = ? and i_user = ? ";
+
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);			
+			ps.setInt(1, param.getI_cmt());
+			ps.setInt(2, param.getI_user());
+			
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps);
+		}
+	}
 	
 	
 	
