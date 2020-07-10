@@ -17,6 +17,13 @@
 		width: 100%;
 		height: 100%;
 	}
+	
+	#contentContainer {
+		width: 100%;
+		height: 100%;
+		overflow-y: scroll;
+	}
+	
 	#cmtModContainer {
 		visibility: hidden;
 		width: 100%;
@@ -49,7 +56,7 @@
 		</div>
 	</div>
 	
-	<div>
+	<div id="contentContainer">
 		<div>
 			<a href="/boardList"><button>리스트로 돌아가기</button></a>
 			<c:if test="${loginUser.i_user == data.i_user }">
@@ -106,7 +113,7 @@
 						<td>
 							<c:if test="${item.i_user == loginUser.i_user}">
 								<a href="/boardCmt?i_board=${data.i_board}&i_cmt=${item.i_cmt}">삭제</a>
-								<a href="#" onclick="showCmtModWin(${item.i_cmt}, '${item.cmt}')">수정</a>
+								<a href="#" onclick="showCmtModWin(${item.i_cmt}, '${item.cmt.trim()}')">수정</a>
 							</c:if>
 						</td>
 					</tr>				
