@@ -6,7 +6,14 @@ public class BoardCmtVO {
 	private int i_user;
 	private String cmt;
 	private String r_dt;
+	private String writerNm;
 	
+	public String getWriterNm() {
+		return writerNm;
+	}
+	public void setWriterNm(String writerNm) {
+		this.writerNm = writerNm;
+	}
 	public int getI_cmt() {
 		return i_cmt;
 	}

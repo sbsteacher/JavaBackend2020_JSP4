@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.koreait.board4.dao.BoardCmtDAO;
 import com.koreait.board4.dao.BoardDAO;
 import com.koreait.board4.vo.BoardListModel;
 import com.koreait.board4.vo.UserVO;
@@ -55,6 +56,7 @@ public class BoardDetailSer extends HttpServlet {
 		param.setI_user(loginUser.getI_user());
 		
 		request.setAttribute("data", BoardDAO.selectBoard(param));
+		request.setAttribute("cmtList", BoardCmtDAO.selectBoardCmtList(i_board));
 		
 		String jsp = "/WEB-INF/jsp/boardDetail.jsp";
 		if("mod".equals(typ)) {

@@ -26,7 +26,7 @@ public class LoginSer extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		autoLogin(request);		
+		//autoLogin(request);		
 		
 		if(request.getSession().getAttribute("loginUser") != null) {
 			response.sendRedirect("/boardList");

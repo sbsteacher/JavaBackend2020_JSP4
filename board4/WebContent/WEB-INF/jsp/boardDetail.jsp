@@ -48,6 +48,30 @@
 			</div>
 		</form>
 	</div>
+	<div>
+		<table>
+			<tr>
+				<th>No</th>
+				<th>작성자</th>
+				<th>내용</th>
+				<th>등록일</th>
+				<th>비고</th>
+			</tr>		
+			<c:forEach items="${cmtList }" var="item">
+				<tr>
+					<td>${item.i_cmt }</td>
+					<td>${item.writerNm }</td>
+					<td>${item.cmt }</td>
+					<td>${item.r_dt }</td>
+					<td>
+						<c:if test="${item.i_user == loginUser.i_user}">
+							<a href="/boardCmt?i_cmt=${item.i_cmt }">삭제</a>
+						</c:if>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 	
 	<script>		
 		function doLike(i_board) {
