@@ -57,9 +57,11 @@
 				<th>등록일</th>
 				<th>비고</th>
 			</tr>		
+			<c:set var="cmtNo" value="1"/>
+			<% int idx = 1; %>
 			<c:forEach items="${cmtList }" var="item">
 				<tr>
-					<td>${item.i_cmt }</td>
+					<td><%=idx++ %></td>					
 					<td>${item.writerNm }</td>
 					<td>${item.cmt }</td>
 					<td>${item.r_dt }</td>
@@ -68,7 +70,7 @@
 							<a href="/boardCmt?i_cmt=${item.i_cmt }">삭제</a>
 						</c:if>
 					</td>
-				</tr>
+				</tr>				
 			</c:forEach>
 		</table>
 	</div>
