@@ -18,6 +18,7 @@
 		height: 100%;
 	}
 	#cmtModContainer {
+		visibility: hidden;
 		width: 100%;
 		height: 100%;
 		z-index: 10;
@@ -44,6 +45,7 @@
 				<div><textarea name="cmt"></textarea></div>
 				<div><input type="submit" value="수정"></div>
 			</form>
+			<button onclick="closeCmtModWin()">취소</button>
 		</div>
 	</div>
 	
@@ -104,6 +106,7 @@
 						<td>
 							<c:if test="${item.i_user == loginUser.i_user}">
 								<a href="/boardCmt?i_board=${data.i_board}&i_cmt=${item.i_cmt}">삭제</a>
+								<a href="#" onclick="showCmtModWin(${item.i_cmt}, '${item.cmt}')">수정</a>
 							</c:if>
 						</td>
 					</tr>				
@@ -112,7 +115,15 @@
 		</div>
 	</div>
 	
-	<script>		
+	<script>	
+		function closeCmtModWin() {
+			cmtModContainer.style.visibility = 'hidden'
+		}
+	
+		function showCmtModWin(i_cmt, cmt) {
+			cmtModContainer.style.visibility = 'visible'
+		}
+	
 		function doLike(i_board) {
 	
 			var isLike = (markLike.innerHTML.trim() == '♥') ?  1 : 0
