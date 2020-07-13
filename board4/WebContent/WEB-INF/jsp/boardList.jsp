@@ -15,6 +15,14 @@
 		background-color: #ecf0f1;
 		cursor: pointer;
 	}
+	
+	#pagingContainer {
+		display: flex;
+		width: 100%;
+		height: 30px;
+		justify-content: center;
+		align-items: center;
+	}
 </style>
 </head>
 <body>	
@@ -52,6 +60,13 @@
 				</tr>
 			</c:forEach>
 		</table>
+	</div>
+	<div id="pagingContainer">
+		<div>
+			<c:forEach begin="1" end="${totalPageCnt}" var="i">
+				<span style="margin-right:5px;"><a href="/boardList?page=${i}">${i}</a></span>
+			</c:forEach>
+		</div>
 	</div>
 	<script>
 		function moveToDetail(i_board) {			

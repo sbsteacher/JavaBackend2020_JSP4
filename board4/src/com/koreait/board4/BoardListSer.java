@@ -17,6 +17,8 @@ import com.koreait.board4.vo.UserVO;
 public class BoardListSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
+	private int recordCnt = 5;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
 		UserVO loginUser = (UserVO)hs.getAttribute("loginUser"); //추가
@@ -24,8 +26,22 @@ public class BoardListSer extends HttpServlet {
 			response.sendRedirect("/login");
 			return;
 		}
-		BoardListModel param = new BoardListModel(); //추가
-		param.setI_user(loginUser.getI_user()); //추가
+		
+		String strPage = request.getParameter("page");//추가
+		int page = 1;//추가
+		if(strPage != null) {//추가
+			page = Integer.parseInt(strPage);//추가
+		}//추가
+		System.out.println("page : " + page);//추가
+		request.setAttribute("totalPageCnt", BoardDAO.selectTotalPageCnt(recordCnt));//추가
+		
+		int endIdx = page * recordCnt; //추가
+		int startIdx = endIdx - recordCnt; //추가
+		
+		BoardListModel param = new BoardListModel(); 
+		param.setI_user(loginUser.getI_user()); 
+		param.setStartIdx(startIdx);//추가
+		param.setEndIdx(endIdx);//추가
 		
 		request.setAttribute("data", BoardDAO.selectBoardList(param));
 		

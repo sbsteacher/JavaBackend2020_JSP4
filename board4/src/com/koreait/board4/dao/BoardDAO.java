@@ -98,17 +98,25 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
-		String sql = " SELECT A.i_board, A.title, A.r_dt, A.cnt, B.i_user, B.nm as userNm"
-				+ "  , NVL(C.i_user, 0) as likeUser " //추가
+		String sql  = " SELECT * FROM (  "
+				+ " SELECT ROWNUM AS RNUM, Z.*  "
+				+ " FROM ( ";
+		
+		sql += " SELECT A.i_board, A.title, A.r_dt, A.cnt, B.i_user, B.nm as userNm"
+				+ "  , NVL(C.i_user, 0) as likeUser "
 				+ " FROM t_board3 A INNER JOIN t_user3 B  ON A.i_user = B.i_user "
-				+ " LEFT JOIN t_board3_like C ON A.i_board = C.i_board AND C.i_user = ? " //추가
+				+ " LEFT JOIN t_board3_like C ON A.i_board = C.i_board AND C.i_user = ? "
 				+ " ORDER BY i_board DESC ";
 
+		sql += " ) Z WHERE ROWNUM <= ? "
+				+ " ) WHERE RNUM > ? ";
+		
 		try {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, param.getI_user()); //추가
+			ps.setInt(1, param.getI_user()); 
+			ps.setInt(2,  param.getEndIdx()); //추가
+			ps.setInt(3,  param.getStartIdx()); //추가
 			
 			rs = ps.executeQuery();
 
@@ -134,6 +142,32 @@ public class BoardDAO {
 		return list;
 	}
 
+	public static int selectTotalPageCnt(int recordCnt) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT CEIL(COUNT(i_board) / ?) FROM t_board3 ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, recordCnt);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps, rs);
+		}		
+		return result;
+	}
+	
 	public static void updCntAdd(int i_board) {
 		Connection con = null;
 		PreparedStatement ps = null;
