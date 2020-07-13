@@ -34,7 +34,6 @@ public class BoardCmtSer extends HttpServlet {
 		response.sendRedirect("/boardDetail?i_board=" + i_board);		
 	}
 
-
 	//등록&수정
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();

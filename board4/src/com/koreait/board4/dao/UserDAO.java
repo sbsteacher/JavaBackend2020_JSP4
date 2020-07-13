@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.koreait.board4.vo.UserChangeVO;
 import com.koreait.board4.vo.UserVO;
 
 public class UserDAO {
@@ -102,6 +103,33 @@ public class UserDAO {
 		return result;
 	}
 	
+	
+	public static int changePw(UserChangeVO param) {
+		int result = 2; //2:에러 발생, 1:수정완료, 0:기존 비밀번호 틀림
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " UPDATE t_user3 "
+				+ " SET cpw = ? "
+				+ " WHERE i_user = ? AND cpw = ? ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setNString(1, param.getChangePw());
+			ps.setInt(2, param.getI_user());
+			ps.setNString(3, param.getCurrentPw());
+			
+			result = ps.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps);
+		}
+		
+		return result;
+	}
 }
 
 

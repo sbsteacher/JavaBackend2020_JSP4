@@ -21,8 +21,9 @@
 	<div>
 		${loginUser.nm }님 환영합니다.
 		<form action="/boardList" method="post">
-			<input type="submit" value="로그아웃">			
+			<input type="submit" value="로그아웃">		
 		</form>
+		<a href="/myPage?typ=1"><button>비밀번호 수정</button></a>
 	</div>
 	<div>
 		<a href="/boardReg"><button>글쓰기</button></a>
