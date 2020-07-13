@@ -27,8 +27,17 @@ public class MyPageSer extends HttpServlet {
 		
 		String jsp = "/WEB-INF/jsp/";
 		switch(typ) {
-		case "1":
-			jsp += "changePw.jsp";
+		case "1": //비밀번호 바꾸기
+			jsp += "changePw.jsp"; //"/WEB-INF/jsp/changePw.jsp"
+			break;
+		case "2": //이름 바꾸기
+			jsp += "?.jsp";
+			break;
+		case "3": //프사 보기(바꾸기 가능)
+			jsp += "?.jsp";
+			break;
+		case "4": //상태메시지 바꾸기
+			jsp += "?.jsp";
 			break;
 		}
 		
@@ -37,13 +46,16 @@ public class MyPageSer extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String typ = request.getParameter("typ");
+		UserVO loginUser = Utils.getLoginUser(request);
 		
-		UserVO loginUser = Utils.getLoginUser(request); 
 		
 		try {
 			switch(typ) {
 				case "1": //비밀번호 수정			
 					procTyp1(loginUser, request, response);
+					break;
+				case "2"://이름 바꾸기
+					//procTyp2();
 					break;
 			}
 		} catch(Exception e) {

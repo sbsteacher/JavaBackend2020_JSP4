@@ -37,7 +37,7 @@ public class BoardListSer extends HttpServlet {
 		
 		int endIdx = page * recordCnt; //추가
 		int startIdx = endIdx - recordCnt; //추가
-		
+				
 		BoardListModel param = new BoardListModel(); 
 		param.setI_user(loginUser.getI_user()); 
 		param.setStartIdx(startIdx);//추가
