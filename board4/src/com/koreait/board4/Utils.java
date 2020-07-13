@@ -7,6 +7,10 @@ import com.koreait.board4.vo.UserVO;
 
 
 public class Utils {
+	public static boolean isLogout(HttpServletRequest request) {
+		return getLoginUser(request) == null;
+	}
+	
 	public static UserVO getLoginUser(HttpServletRequest request) {
 		HttpSession hs = request.getSession();
 		return (UserVO)hs.getAttribute("loginUser");

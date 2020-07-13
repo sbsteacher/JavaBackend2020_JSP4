@@ -7,6 +7,7 @@
 <title>비밀번호 수정</title>
 </head>
 <body>
+	<div>${msg}</div>
 	<form action="/myPage?typ=${param.typ}" method="post">
 		<div>기존 비밀번호: <input type="password" name="currentPw"></div>
 		<div>변경 비밀번호: <input type="password" name="changePw"></div>

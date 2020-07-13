@@ -18,6 +18,11 @@ public class MyPageSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(Utils.isLogout(request)) {
+			response.sendRedirect("/login");
+			return;
+		}
+		
 		String typ = request.getParameter("typ");
 		
 		String jsp = "/WEB-INF/jsp/";
